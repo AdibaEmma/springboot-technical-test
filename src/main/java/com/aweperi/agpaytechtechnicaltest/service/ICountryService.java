@@ -9,5 +9,5 @@ public interface ICountryService {
     List<Country> findByPartialName(String partialName);
     Country addCountry(Country country);
 
-    Country getCountryById(Long id);
+    Country getCountryById(Integer id);
 }

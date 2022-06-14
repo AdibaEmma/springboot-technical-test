@@ -37,13 +37,14 @@ public class CountryService implements  ICountryService{
         } else if (country.getPopulation() <= 0) {
             throw new IllegalPopulationSizeException();
         } else {
+            country.setId(countries.size() + 1);
             countries.add(country);
             return countries.get(countries.size() - 1);
         }
     }
 
     @Override
-    public Country getCountryById(Long id) {
+    public Country getCountryById(Integer id) {
         var foundCountries = countries.stream().filter(country -> country.getId().equals(id)).toList();
         return foundCountries.stream().findFirst().orElseThrow(CountryNotFoundException::new);
     }

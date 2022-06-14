@@ -46,13 +46,6 @@ public class CountryServiceFascade {
     }
 
     private Country convertToEntity(CountryDto countryDto) throws ParseException {
-        Country country = modelMapper.map(countryDto, Country.class);
-
-        if (countryDto.getId() != null) {
-            Country oldCountry = countryService.getCountryById(countryDto.getId());
-            country.setName(oldCountry.getName());
-            country.setPopulation(oldCountry.getPopulation());
-        }
-        return country;
+        return modelMapper.map(countryDto, Country.class);
     }
 }

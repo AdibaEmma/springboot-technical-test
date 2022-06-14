@@ -10,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Country{
-    private Long id;
+    private Integer id;
     private  String name;
-    private int population;
+    private Integer population;
 }

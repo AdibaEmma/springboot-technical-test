@@ -3,15 +3,13 @@ package com.aweperi.agpaytechtechnicaltest.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import org.springframework.lang.Nullable;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CountryDto {
-    private Long id;
+    private @Nullable Integer id;
     private  String name;
-    private int population;
+    private Integer population;
 }
