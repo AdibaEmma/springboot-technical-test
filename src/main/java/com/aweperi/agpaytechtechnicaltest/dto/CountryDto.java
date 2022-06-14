@@ -5,13 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CountryDto {
     private Long id;
-    @NotBlank(message = "country name cannot blank or null")
     private  String name;
     private int population;
 }

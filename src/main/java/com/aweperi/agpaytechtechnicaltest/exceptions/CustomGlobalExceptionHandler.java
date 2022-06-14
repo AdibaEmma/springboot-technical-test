@@ -47,10 +47,18 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(value = CountryAlreadyExistsException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ResponseStatus(value = HttpStatus.CONFLICT)
     public ErrorMessage countriesNotFoundException(CountryAlreadyExistsException ex) {
         log.error(ex.getMessage());
-        return new ErrorMessage(HttpStatus.NOT_FOUND.value(), new Date(), "Existing Country Entity Error", ex.getMessage());
+        return new ErrorMessage(HttpStatus.CONFLICT.value(), new Date(), "Existing Country Entity Error", ex.getMessage());
+    }
+
+    @ExceptionHandler(value = NameCannotBeNullException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorMessage illegalPopulationSizeException(NameCannotBeNullException ex) {
+        log.error(ex.getMessage());
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), new Date(),
+                "Country Name Error", ex.getMessage());
     }
 
     @ExceptionHandler(value = IllegalPopulationSizeException.class)
@@ -58,7 +66,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     public ErrorMessage illegalPopulationSizeException(IllegalPopulationSizeException ex) {
         log.error(ex.getMessage());
         return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), new Date(),
-                "Zero or Negative Population Size Error", ex.getCause().getMessage());
+                "Zero or Negative Population Size Error", ex.getMessage());
     }
 
     @ExceptionHandler(value = ClassNotFoundException.class)

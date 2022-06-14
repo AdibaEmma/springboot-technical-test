@@ -1,7 +1,9 @@
 package com.aweperi.agpaytechtechnicaltest.service;
 
 import com.aweperi.agpaytechtechnicaltest.exceptions.CountryAlreadyExistsException;
+import com.aweperi.agpaytechtechnicaltest.exceptions.CountryNotFoundException;
 import com.aweperi.agpaytechtechnicaltest.exceptions.IllegalPopulationSizeException;
+import com.aweperi.agpaytechtechnicaltest.exceptions.NameCannotBeNullException;
 import com.aweperi.agpaytechtechnicaltest.model.Country;
 import com.aweperi.agpaytechtechnicaltest.repository.CountryRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,11 +38,12 @@ public class CountryService implements  ICountryService{
     public List<Country> findByPartialName(String partialName) {
 
         var countryList = countryRepository.findByNameContaining(partialName);
-        return countryList.orElseThrow(() -> new RuntimeException("No country contains keyword"));
+        return countryList.orElseThrow(() -> new CountryNotFoundException(String.format("No country contains keyword %s",partialName)));
     }
 
     @Override
     public Country addCountry(Country country) {
+        if (country.getName().isEmpty() || country.getName() == null ) throw new NameCannotBeNullException();
         var queriedCountry = countryRepository.findByName(country.getName());
         if(queriedCountry.isPresent()) {
             throw new CountryAlreadyExistsException(String.format("Country with name %s already exists", country.getName()));

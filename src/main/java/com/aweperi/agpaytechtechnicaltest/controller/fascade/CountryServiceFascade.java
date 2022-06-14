@@ -32,7 +32,7 @@ public class CountryServiceFascade {
     }
 
     public CountryDto addCountry(CountryDto requestBody) {
-        var countryDto = new CountryDto();
+        CountryDto countryDto = null;
         try {
             var country = convertToEntity(requestBody);
             countryDto = convertToDto(countryService.addCountry(country));
