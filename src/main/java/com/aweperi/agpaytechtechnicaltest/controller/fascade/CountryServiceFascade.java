@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
@@ -21,8 +22,8 @@ public class CountryServiceFascade {
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<CountryDto> findPaginatedCountries(int pageNo, int pageSize) {
-        return countryService.findPaginated(pageNo, pageSize).stream()
+    public List<CountryDto> findPaginatedCountries(Pageable pageable) {
+        return countryService.findPaginated(pageable).stream()
                 .map(this::convertToDto).toList();
     }
 

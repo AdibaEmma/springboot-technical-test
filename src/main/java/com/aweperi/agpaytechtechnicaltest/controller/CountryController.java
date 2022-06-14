@@ -3,6 +3,7 @@ package com.aweperi.agpaytechtechnicaltest.controller;
 import com.aweperi.agpaytechtechnicaltest.controller.fascade.CountryServiceFascade;
 import com.aweperi.agpaytechtechnicaltest.dto.CountryDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CountryController {
     private final CountryServiceFascade countryService;
-    @GetMapping(params = { "page", "size" } )
-    public ResponseEntity<?> findPaginatedCountries(@RequestParam("page") int page, @RequestParam("size") int size) {
-        return ResponseHandler.handleResponseBody(HttpStatus.OK, "Countries Found With Pagination" , countryService.findPaginatedCountries(page, size));
+    @GetMapping()
+    public ResponseEntity<?> findPaginatedCountries( Pageable pageable) {
+        return ResponseHandler.handleResponseBody(HttpStatus.OK, "Countries Found With Pagination" , countryService.findPaginatedCountries(pageable));
     }
 
     @GetMapping("/{partialName}")

@@ -7,6 +7,9 @@ import com.aweperi.agpaytechtechnicaltest.exceptions.NameCannotBeNullException;
 import com.aweperi.agpaytechtechnicaltest.model.Country;
 import com.aweperi.agpaytechtechnicaltest.repository.CountryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +19,12 @@ import java.util.List;
 public class CountryService implements  ICountryService{
     private final List<Country> countries = CountryRepository.countries;
     @Override
-    public List<Country> findPaginated(int offset, int pageSize) {
-        return countries.subList(offset, pageSize).stream().toList();
+    public List<Country> findPaginated(Pageable pageable) {
+        final int start = (int)pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), countries.size());
+        final Page<Country> page = new PageImpl<>(countries.subList(start, end), pageable, countries.size());
+
+        return page.toList();
     }
 
     @Override
