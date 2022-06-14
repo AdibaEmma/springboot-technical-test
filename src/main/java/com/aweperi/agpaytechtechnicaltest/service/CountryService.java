@@ -1,5 +1,7 @@
 package com.aweperi.agpaytechtechnicaltest.service;
 
+import com.aweperi.agpaytechtechnicaltest.exceptions.CountryAlreadyExistsException;
+import com.aweperi.agpaytechtechnicaltest.exceptions.IllegalPopulationSizeException;
 import com.aweperi.agpaytechtechnicaltest.model.Country;
 import com.aweperi.agpaytechtechnicaltest.repository.CountryRepository;
 import lombok.RequiredArgsConstructor;
@@ -41,9 +43,16 @@ public class CountryService implements  ICountryService{
     public Country addCountry(Country country) {
         var queriedCountry = countryRepository.findByName(country.getName());
         if(queriedCountry.isPresent()) {
-            throw new RuntimeException("Country already exists");
+            throw new CountryAlreadyExistsException(String.format("Country with name %s already exists", country.getName()));
+        } else if (country.getPopulation() <= 0) {
+            throw new IllegalPopulationSizeException();
         } else {
             return countryRepository.save(country);
         }
+    }
+
+    @Override
+    public Country getCountryById(Long id) {
+        return countryRepository.getCountryById(id);
     }
 }

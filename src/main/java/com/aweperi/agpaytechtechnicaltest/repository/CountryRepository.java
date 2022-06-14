@@ -13,4 +13,5 @@ import java.util.Optional;
 public interface CountryRepository extends JpaRepository<Country, Long> {
     Optional<List<Country>> findByNameContaining(String partialName);
     Optional<Country> findByName(String name);
+    Country getCountryById(Long id);
 }
