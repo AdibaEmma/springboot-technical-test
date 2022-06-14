@@ -1,12 +1,12 @@
 package com.aweperi.agpaytechtechnicaltest.controller;
 
+import com.aweperi.agpaytechtechnicaltest.controller.fascade.CountryServiceFascade;
+import com.aweperi.agpaytechtechnicaltest.dto.CountryDto;
+import com.aweperi.agpaytechtechnicaltest.mapper.CountryMapper;
 import com.aweperi.agpaytechtechnicaltest.model.Country;
 import com.aweperi.agpaytechtechnicaltest.service.ICountryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,10 +14,19 @@ import java.util.List;
 @RequestMapping("/api/v1/countries")
 @RequiredArgsConstructor
 public class CountryController {
-    private final ICountryService countryService;
+    private final CountryServiceFascade countryService;
+    @GetMapping(params = { "page", "size" } )
+    public List<CountryDto> findPaginatedCountries(@RequestParam("page") int page, @RequestParam("size") int size) {
+        return countryService.findPaginatedCountries(page, size);
+    }
 
-    @GetMapping("/{pageNo}/{pageSize}")
-    public List<Country> getPaginatedCountries(@PathVariable int pageNo, @PathVariable int pageSize) {
-        return countryService.findPaginated(pageNo, pageSize);
+    @GetMapping("/{partialName}")
+    public List<CountryDto> findCountriesContainingName(@PathVariable("partialName") String partialName) {
+        return countryService.findByPartialName(partialName);
+    }
+
+    @PostMapping("")
+    public CountryDto addCountry(@RequestBody CountryDto requestBody) {
+        return countryService.addCountry(requestBody);
     }
 }
