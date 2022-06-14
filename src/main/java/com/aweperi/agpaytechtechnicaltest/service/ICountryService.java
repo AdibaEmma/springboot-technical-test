@@ -9,6 +9,5 @@ public interface ICountryService {
     List<Country> findPaginated(Pageable pageable);
     List<Country> findByPartialName(String partialName);
     Country addCountry(Country country);
-
     Country getCountryById(Integer id);
 }

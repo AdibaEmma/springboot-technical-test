@@ -1,12 +1,10 @@
 package com.aweperi.agpaytechtechnicaltest.repository;
 
 import com.aweperi.agpaytechtechnicaltest.model.Country;
-import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
 import java.util.List;
 
-@Repository
 public class CountryRepository {
     public static List<Country> countries = new LinkedList<>(
             List.of(
