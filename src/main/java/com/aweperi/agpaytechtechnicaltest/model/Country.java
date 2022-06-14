@@ -1,25 +1,16 @@
 package com.aweperi.agpaytechtechnicaltest.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "countries")
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
-public class Country {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+public class Country{
     private Long id;
-
     private  String name;
     private int population;
-
-    public Country(String name, int population) {
-        this.name = name;
-        this.population = population;
-    }
 }
